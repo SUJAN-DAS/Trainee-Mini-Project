@@ -28,7 +28,8 @@
     }
 
     // Validate email
-    const emailRegEx = /^([\w-\.]+@(?!gmail.com)(?!yahoo.com)(?!hotmail.com)(?!yahoo.co.in)(?!yahoo.co)(?!aol.com)(?!abc.com)(?!xyz.com)(?!pqr.com)(?!rediffmail.com)(?!live.com)(?!outlook.com)(?!me.com)(?!msn.com)(?!ymail.com)([\w-]+\.)+[\w-]{2,4})?$/;
+    const emailRegEx = "^ ([\w -\.] +@(? !hotmail\.com | aol\.com | rediffmail\.com | live\.com | outlook\.com | me\.com | msn\.com | ymail\.com | abc\.com | xyz\.com | pqr\.com) ([\w -] +\.) +[\w -]{ 2,}) $";
+
     if (_emailId === "") {
         jQuery("#EmailIdError").text("Email id is required.");
         isValid = false;
@@ -209,30 +210,7 @@ function UpdateUserInfo(userId) {
                 jQuery("#txtFirstName").val(response.d.FirstName);
                 jQuery("#txtLastName").val(response.d.LastName);
                 jQuery("#txtEmailID").val(response.d.Email);
-                //trail
-                //if (response.d.Role === 1) {
-                //    jQuery('input[name="makeAdmin"]').prop('checked', true); // Check the box if role is Admin
-                //} else {
-                //    jQuery('input[name="makeAdmin"]').prop('checked', false); // Uncheck the box otherwise
-                //}
-                //switch (response.d.Role) {
-                //    case 'Admin':
-                //        jQuery("#roleDropdown").val("Admin");
-                //        break;
-                //    case 'Trainee':
-                //        jQuery("#roleDropdown").val("Trainee");
-                //        break;
-                //    case 'Intern':
-                //        jQuery("#roleDropdown").val("Intern");
-                //        break;
-                //    default:
-                //        jQuery("#roleDropdown").val(""); // Set to empty or a default option
-                //}
-
-                /*alert('Edit function');*/
-                //updateUserData(userId);
-                //jQuery("#btnSubmit").attr('onclick', 'updateUserData(${userId})');
-                //jQuery("#btnSubmit").text('Update Register');
+                
             }
 
             else {
