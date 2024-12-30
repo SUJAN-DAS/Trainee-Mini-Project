@@ -28,7 +28,7 @@
     }
 
     // Validate email
-    const emailRegEx = "^ ([\w -\.] +@(? !hotmail\.com | aol\.com | rediffmail\.com | live\.com | outlook\.com | me\.com | msn\.com | ymail\.com | abc\.com | xyz\.com | pqr\.com) ([\w -] +\.) +[\w -]{ 2,}) $";
+    const emailRegEx = /^([\w-\.]+@(?!hotmail\.com|aol\.com|rediffmail\.com|live\.com|outlook\.com|me\.com|msn\.com|ymail\.com|abc\.com|xyz\.com|pqr\.com)([\w-]+\.)+[\w-]{2,})$/;
 
     if (_emailId === "") {
         jQuery("#EmailIdError").text("Email id is required.");
@@ -37,6 +37,7 @@
         jQuery("#EmailIdError").text("Email is Invalid.");
         isValid = false;
     }
+
 
     // Validate mobile number
     const mobileRegEx = /^[6-9]\d{9}$/;
