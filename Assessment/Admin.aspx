@@ -6,7 +6,9 @@
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="Scripts/jquery-3.5.1.min.js"></script>
+<script src="Scripts/ajaxfileupload.js"></script>
+
      <script type="text/javascript" src="/Scripts/Admin.js"></script> 
     <style>
         body {
@@ -45,16 +47,16 @@
             text-align: center;
             border: 1px solid #ddd;
         }
-       /* Admin above*/
+       
         .centered-text {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 20px 0; /* Optional for spacing */
+        margin: 20px 0; 
     }
     .centered-text span {
-        font-size: 1.5em; /* Optional for larger text */
-        font-weight: bold; /* Optional for styling */
+        font-size: 1.5em; 
+        font-weight: bold; 
     }
 
         th {
@@ -117,26 +119,31 @@
     </style>
 </head>
 <body>
+     <form id="form1" runat="server" class="form-container">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+    
     <div class="row">
         <div class="col-xs-12 col-md-6 table-with-heading">
 
             <!-- Logout Button -->
             <div class="text-right">
-                <button id="btnLogout" class="btn btn-danger mb-3" onclick="logout()">Logout</button>
+                <button id="btnLogout" type="button" class="btn btn-danger mb-3" onclick="Logout();">Logout</button>
+
             </div>
            <%-- logout--%>
 
            <%-- for download and upload--%>
-
             
-            <%--<section class="search-section" style="min-height: 40px;margin-bottom:0px;">
+            
+            <section class="search-section" style="min-height: 40px;margin-bottom:0px;">
                 <div class="down-up-div mr-3" style="padding-top: 10px;">
                         <div class="download_upload mr-2"></div>
                         <div>Download & Upload</div>
                     </div>
                     <fieldset class="down-up-block hide" id="downUp-block">
                         <fieldset class="row mx-0 py-2" style="padding-left:9px;">
-                            <a id="btnDownloadTemplate" type="button" runat="server" class="btn btn-outline-light btn-sm float-left" data-bind="enable: !viewUserModal.ExcelDownloadInProgress()" onclick="DownloadUserInfoTemplate(); return false;">
+                            <a id="btnDownloadTemplate" type="button" runat="server" class="btn btn-outline-light btn-sm float-left" onclick="DownloadUserInfoTemplate(); return false;">
                                 <i class="float-left i-download mr-1 float-left"></i><span>Download Template</span>
                             </a>
 
@@ -145,11 +152,11 @@
                                 <span>Upload User Info</span>
                             </button>
 
-                            <button id="btnDownloadUserInfo" type="button" class="btn btn-outline-light btn-sm float-left" runat="server" data-bind="enable: !viewUserModal.ExcelDownloadInProgress()" onclick="DownloadAllUserInfo(); return false;">
-                                <i class="float-left i-download mr-1 float-left"></i><span>Download User Info</span>
-                            </button>
+<%--                            <button id="btnDownloadUserInfo" type="button" class="btn btn-outline-light btn-sm float-left" runat="server" onclick="DownloadAllLogFail(); return false;">
+                                <i class="float-left i-download mr-1 float-left"></i><span>Download Log Failed</span>
+                            </button>--%>
 
-                            <span data-bind="css: { '': viewUserModal.ExcelDownloadInProgress(), 'hide': !viewUserModal.ExcelDownloadInProgress() }" class="spinner-circle-small float-left" style="border-width: 3px; border-style: dotted; border-color: rgb(36, 138, 204) rgb(246, 246, 246) rgb(246, 246, 246);"></span>
+                            <span class="spinner-circle-small float-left" style="border-width: 3px; border-style: dotted; border-color: rgb(36, 138, 204) rgb(246, 246, 246) rgb(246, 246, 246);"></span>
                             <span class="text-danger clearfix"></span>
 
                             <div id="divUploadExcel" class="col-12 p-0 push-down" style="display: none">
@@ -164,14 +171,12 @@
                         </fieldset>
                     </fieldset>
 
-                </section>--%>
+                </section>
             <%-- for download and upload--%>
             <div>
-                <span class="centered-text"> Admin </span>
+                <span class="centered-text" id="lblAdminName"> Admin </span>
             </div>
-        <%--    <span class="centered-text">
-    <asp:Label ID="lblAdminName" runat="server" Text="Admin" />
-</span>--%>
+        
 
 
             <div class="scroll-x">
@@ -197,12 +202,15 @@
                       </tbody>
                 </table>
             </div>
-            <%--//Create User button--%>
+            
             <div class="text-center mt-3">
-            <button id="btnCreateUser" class="btn btn-primary" onclick="createUser()">Create User</button>
+           
+                <button id="btnCreateUser" type="button" class="btn btn-primary" onclick="CreateUser()">Create User</button>
+
         </div>
-            <%--Create user--%>
+           
         </div>
     </div>
+        </form>
 </body>
 </html>

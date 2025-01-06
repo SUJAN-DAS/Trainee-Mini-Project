@@ -101,7 +101,7 @@
     <div class="container">
         <div id="txtform">
             <h1 class="text-center">Registration Form</h1>
-            <form id="form1" runat="server" onsubmit="register(event)">
+            <form id="form1" runat="server" onsubmit="Register(event)">
                 <table>
                     <tr>
                         <th>First Name:<span class="text-danger">*</span></th>
@@ -142,19 +142,17 @@
                         <th>Make Admin:</th>
                         <td><input type="checkbox" id="makeAdmin" class="custom-checkbox cursor-pointer makeAdmin" name="makeAdmin" style="width: 20px; height: 20px;" /></td>
                     </tr>--%>
-                    <%--//--%>
-                    <%--<tr id="RoleDiv">
+                     <tr id="RoleDiv">
                         <th>Role:<span class="text-danger">*</span></th>
                         <td>
                             <select id="roleDropdown" class="form-control" name="Role">
-                                <option value="" disabled>Select Role</option>
+                                <option value="-1">Select Role</option>
                                 <option value="Admin">Admin</option>
                                 <option value="Trainee">Trainee</option>
                                 <option value="Intern">Intern</option>
                             </select>
                         </td>
-                    </tr>--%>
-                    <%--//--%>
+                    </tr>
                 </table>
                 <div class="button-group mt-3">
                     <button type="submit" id="btnSubmit" class="btn btn-primary" runat="server">Register</button>

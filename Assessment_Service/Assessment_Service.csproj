@@ -130,6 +130,17 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\Service_Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Service_Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UserInformation_Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserInformation_Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Common.cs" />
     <Compile Include="DataListInfo.cs" />
     <Compile Include="EditData.cs" />
     <Compile Include="IUserService.cs" />
@@ -157,6 +168,18 @@
       <Project>{2a5b8afd-4c85-4a31-903b-4fcf7a54829a}</Project>
       <Name>Assessment_DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\UserInformation_Resource.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UserInformation_Resource.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Service_Resource.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Service_Resource.Designer.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

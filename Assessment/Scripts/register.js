@@ -1,7 +1,6 @@
 ﻿function ValidateForm() {
     let isValid = true;
 
-    // Clear previous error messages
     $(".error-message").text("");
 
     const _firstName = jQuery("#txtFirstName").val().trim();
@@ -70,28 +69,28 @@ function ClearForm() {
     }
 }
 
-function register(event) {
+function Register(event) {
     event.preventDefault();
     if (ValidateForm()) {
         //alert("validation successfull");
         //ClearForm();
-        const _firstName = document.getElementById("txtFirstName").value.trim();
-        const _lastName = document.getElementById("txtLastName").value.trim();
-        const _emailId = document.getElementById("txtEmailID").value.trim();
-        const _MobileNo = document.getElementById("txtMobile").value.trim();
-        const _password = document.getElementById("txtPassword").value.trim();
-        /*const _selectedRole = document.querySelector("#roleDropdown").value;*/
+        const firstName = document.getElementById("txtFirstName").value.trim();
+        const lastName = document.getElementById("txtLastName").value.trim();
+        const emailId = document.getElementById("txtEmailID").value.trim();
+        const MobileNo = document.getElementById("txtMobile").value.trim();
+        const password = document.getElementById("txtPassword").value.trim();
+        const selectedRole = document.querySelector("#roleDropdown").value;
         /*const _isAdmin = document.querySelector("#makeAdmin").checked*/
         $.ajax({
             type: "POST",
             url: "WebService/UserRegistration.asmx/RegisterDetails",
             data: JSON.stringify({
-                firstName: _firstName,
-                lastName: _lastName,
-                emailId: _emailId ,
-                mobileNo: _MobileNo,
-                password: _password,
-                /*role: _isAdmin?1:2*/
+                firstName: firstName,
+                lastName: lastName,
+                emailId: emailId ,
+                mobileNo: MobileNo,
+                password: password,
+                role: selectedRole
             }),
             contentType: "Application/json; charset=utf-8",
             dataType: "json",
@@ -116,12 +115,12 @@ function register(event) {
     }
 }
 
-function login(event) {
+function Login(event) {
     event.preventDefault();
-    const _emailId = jQuery("#txtEmail").val().trim();
-    const _password = jQuery("#txtPassword").val().trim();
+    const emailId = jQuery("#txtEmail").val().trim();
+    const password = jQuery("#txtPassword").val().trim();
 
-    if (!_emailId || !_password) {
+    if (!emailId || !password) {
         alert("Please enter both email and password.");
         return;
     }
@@ -130,8 +129,8 @@ function login(event) {
         type: "POST",
         url: "WebService/UserRegistration.asmx/LoginDetails",
         data: JSON.stringify({
-            emailId: _emailId,
-            password: _password,
+            emailId: emailId,
+            password: password,
         }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -147,7 +146,7 @@ function login(event) {
                     window.location.href = `User.aspx?userId=${result.UserId}`;
                 }
                 else {
-                    window.location.href = `FailedLoginAttempts.aspx?userId=${result.UserId}&email=${_emailId}&password=${_password}`;
+                    window.location.href = `FailedLoginAttempts.aspx?userId=${result.UserId}&email=${emailId}&password=${password}`;
 
                 }
             
@@ -161,28 +160,28 @@ function login(event) {
     });
 }
 //trail logFailed
-function logFailed(_emailId, _password) {
-    $.ajax({
-        type: "POST",
-        url: "WebService/UserRegistration.asmx/LogInfo",
-        data: JSON.stringify({
-            _email:_emailId,
-            _password:_password
-        }),
-        contentType: "Application/json; charset=utf-8",
-        dataType: "json",
-        success: function (response) {
-            $("#failedLoginTable").find('tbody').append(response.d);
-        },
-        error: function (xhr, status, error) {
-            console.error("Error: " + error);
-            console.error("Response Text: " + xhr.responseText);
-        }
-    });
+//function logFailed(_emailId, _password) {
+//    $.ajax({
+//        type: "POST",
+//        url: "WebService/UserRegistration.asmx/LogInfo",
+//        data: JSON.stringify({
+//            _email:_emailId,
+//            _password:_password
+//        }),
+//        contentType: "Application/json; charset=utf-8",
+//        dataType: "json",
+//        success: function (response) {
+//            $("#failedLoginTable").find('tbody').append(response.d);
+//        },
+//        error: function (xhr, status, error) {
+//            console.error("Error: " + error);
+//            console.error("Response Text: " + xhr.responseText);
+//        }
+//    });
 
 
 
-}
+//}
 
 //trail logFailed
 function UpdateUserInfo(userId) {
@@ -190,7 +189,7 @@ function UpdateUserInfo(userId) {
     $.ajax({
         type: "POST",
 
-        url: "WebService/UserRegistration.asmx/GetUserInfo",
+        url: "WebService/UserRegistration.asmx/GetUserDetail",
 
         data: JSON.stringify({
 
@@ -234,7 +233,7 @@ function UpdateUserInfo(userId) {
 
 }
 
-function updateUserData(userId) {
+function UpdateUserData(userId) {
     var userID = userId;
     var fName = jQuery("#txtFirstName").val();
     var lName = jQuery("#txtLastName").val();
@@ -287,7 +286,7 @@ function Clear() {
     jQuery("#txtEmailID").val("");
     jQuery("#txtMobile").val("");
     jQuery("#txtPassword").val("");
-    jQuery('input[name="makeAdmin"]').prop('checked', false);
+    /*jQuery('input[name="makeAdmin"]').prop('checked', false);*/
 }
 
 function ClearLogin() {

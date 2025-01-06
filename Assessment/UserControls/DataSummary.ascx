@@ -6,7 +6,7 @@
     <td id="tdRole" class="center-align" runat="server" enableviewstate="false">
         <%--//trail--%>
         
-      <asp:DropDownList ID="ddlRole" CssClass="form-control" runat="server" AutoPostBack="true" onchange="updateRole(this)">
+      <asp:DropDownList ID="ddlRole" CssClass="form-control" runat="server" AutoPostBack="true" onchange="UpdateRole(this)">
     <asp:ListItem Value="Intern">Intern</asp:ListItem>
     <asp:ListItem Value="Admin">Admin</asp:ListItem>
     <asp:ListItem Value="Trainee">Trainee</asp:ListItem>

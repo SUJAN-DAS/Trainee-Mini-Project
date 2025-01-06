@@ -21,11 +21,11 @@ namespace Assessment
                     {
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "UpdateUserInfoScript", $"UpdateUserInfo({userID});", true);
                         btnSubmit.InnerText = "Update";
-                        btnSubmit.Attributes.Add("onclick", $"updateUserData({userID}); return false;");
+                        btnSubmit.Attributes.Add("onclick", $"UpdateUserData({userID}); return false;");
                     }
                     else
                     {
-                        btnSubmit.Attributes.Add("onclick", "register(event); return false;");
+                        btnSubmit.Attributes.Add("onclick", "Register(event); return false;");
                         btnSubmit.InnerText = "Add Register";
                     }
                 }

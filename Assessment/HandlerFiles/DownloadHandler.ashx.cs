@@ -12,93 +12,66 @@ namespace Assessment.HandlerFiles
     public class DownloadHandler : IHttpHandler
     {
 
-        //public void ProcessRequest(HttpContext context)
-        //{
-        //    context.Response.ContentType = "text/plain";
-        //    context.Response.Write("Hello World");
-        //    #region Register Detail
-        //    // Download Register Detail
-        //    if (context.Request.QueryString["type"] != null && context.Request.QueryString["type"] == "sujan")
-        //    {
-        //        string registerDetailFile = "RegisteredDetails.xlsx";
-        //        DownloadTemplate(registerDetailFile, context);
-        //        return;
-        //    }
-        //    #endregion
-        //    if (context.Request.QueryString["sujan"] != null)
-        //    {
-        //        string preweighRulelExcel = context.Request.QueryString["sujan"];
-        //        DownloadExcelFile(preweighRulelExcel, context);
-        //        return;
-        //    }
-        //}
+        public void ProcessRequest(HttpContext context)
+        {
+            // downloading all user info
+            if (context.Request.QueryString["userInfoExcel"] != null)
+            {
+                string userInfo = context.Request.QueryString["userInfoExcel"];
+                DownloadExcelFile(userInfo, context);
+                return;
+            }
 
-        //private void DownloadTemplate(string fileName, HttpContext context)
-        //{
-        //    string path = context.Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["ExcelFormatFolder"]);
+            // downloading user info log file
+            if (context.Request.QueryString["userInfoLogFile"] != null)
+            {
+                string logFileName = context.Request.QueryString["userInfoLogFile"];
+                DownloadLogFile(logFileName, context);
+                return;
+            }
+        }
+        private void DownloadExcelFile(string excelFile, HttpContext context)
+        {
+            string logFilePath = System.Configuration.ConfigurationManager.AppSettings["LogFileLocation"] + excelFile;
+            if (logFilePath != null && logFilePath.Length > 4)
+            {
+                if (logFilePath.Contains(@"\"))
+                {
+                    if (File.Exists(logFilePath))
+                    {
+                        System.IO.FileInfo fileInfo = new System.IO.FileInfo(logFilePath);
+                        context.Response.Clear();
+                        context.Response.ContentType = "application/octet-stream";
+                        context.Response.AddHeader("Content-Disposition", "attachment; filename=" + excelFile);
+                        context.Response.AddHeader("Content-Length", fileInfo.Length.ToString());
+                        context.Response.TransmitFile(fileInfo.FullName);
+                        context.Response.Flush();
+                    }
+                }
+            }
+        }
 
-        //    string filePath = path + fileName;
-        //    if (filePath != null && filePath.Length > 4)
-        //    {
-        //        if (filePath.Contains(@"\"))
-        //        {
-        //            if (File.Exists(filePath))
-        //            {
-        //                System.IO.FileInfo fileInfo = new System.IO.FileInfo(filePath);
-
-        //                context.Response.Clear();
-        //                context.Response.ContentType = "application/octet-stream";
-        //                context.Response.AddHeader("Content-Disposition", "attachment; filename=" + fileName);
-        //                context.Response.AddHeader("Content-Length", fileInfo.Length.ToString());
-        //                context.Response.TransmitFile(fileInfo.FullName);
-        //                context.Response.Flush();
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private void DownloadLogFile(string CheckAndDownloadLogFile, HttpContext context)
-        //{
-        //    //Log file reading
-        //    string logFilePath = System.Configuration.ConfigurationManager.AppSettings["LogFileLocation"] + CheckAndDownloadLogFile;
-        //    if (logFilePath != null && logFilePath.Length > 4)
-        //    {
-        //        if (logFilePath.Contains(@"\"))
-        //        {
-        //            if (File.Exists(logFilePath))
-        //            {
-        //                System.IO.FileInfo fileInfo = new System.IO.FileInfo(logFilePath);
-        //                context.Response.Clear();
-        //                context.Response.ContentType = "application/octet-stream";
-        //                context.Response.AddHeader("Content-Disposition", "attachment; filename=" + CheckAndDownloadLogFile);
-        //                context.Response.AddHeader("Content-Length", fileInfo.Length.ToString());
-        //                context.Response.TransmitFile(fileInfo.FullName);
-        //                context.Response.Flush();
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private void DownloadExcelFile(string excelFile, HttpContext context)
-        //{
-        //    string logFilePath = System.Configuration.ConfigurationManager.AppSettings["LogFileLocation"] + excelFile;
-        //    if (logFilePath != null && logFilePath.Length > 4)
-        //    {
-        //        if (logFilePath.Contains(@"\"))
-        //        {
-        //            if (File.Exists(logFilePath))
-        //            {
-        //                System.IO.FileInfo fileInfo = new System.IO.FileInfo(logFilePath);
-        //                context.Response.Clear();
-        //                context.Response.ContentType = "application/octet-stream";
-        //                context.Response.AddHeader("Content-Disposition", "attachment; filename=" + excelFile);
-        //                context.Response.AddHeader("Content-Length", fileInfo.Length.ToString());
-        //                context.Response.TransmitFile(fileInfo.FullName);
-        //                context.Response.Flush();
-        //            }
-        //        }
-        //    }
-        //}
+        private void DownloadLogFile(string CheckAndDownloadLogFile, HttpContext context)
+        {
+            //Log file reading
+            string logFilePath = System.Configuration.ConfigurationManager.AppSettings["LogFileLocation"] + CheckAndDownloadLogFile;
+            if (logFilePath != null && logFilePath.Length > 4)
+            {
+                if (logFilePath.Contains(@"\"))
+                {
+                    if (File.Exists(logFilePath))
+                    {
+                        System.IO.FileInfo fileInfo = new System.IO.FileInfo(logFilePath);
+                        context.Response.Clear();
+                        context.Response.ContentType = "application/octet-stream";
+                        context.Response.AddHeader("Content-Disposition", "attachment; filename=" + CheckAndDownloadLogFile);
+                        context.Response.AddHeader("Content-Length", fileInfo.Length.ToString());
+                        context.Response.TransmitFile(fileInfo.FullName);
+                        context.Response.Flush();
+                    }
+                }
+            }
+        }
 
         public bool IsReusable
         {
@@ -106,11 +79,6 @@ namespace Assessment.HandlerFiles
             {
                 return false;
             }
-        }
-
-        public void ProcessRequest(HttpContext context)
-        {
-            throw new NotImplementedException();
         }
     }
 }

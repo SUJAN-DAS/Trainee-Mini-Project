@@ -28,12 +28,12 @@ namespace Assessment.WebService
 
         [System.Web.Services.WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
-        public int RegisterDetails(string firstName, string lastName, string emailId, string mobileNo, string password)
+        public int RegisterDetails(string firstName, string lastName, string emailId, string mobileNo, string password, string role)
         {
             try
             {
 
-                return BLL.CommonBLL.RegistrationDetails(firstName, lastName, emailId, mobileNo, password);
+                return BLL.CommonBLL.RegistrationDetails(firstName, lastName, emailId, mobileNo, password,role);
             }
             catch (Exception ex)
             {
@@ -186,14 +186,14 @@ namespace Assessment.WebService
 
         [System.Web.Services.WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
-        public UserBindInformation AdminData()
+        public UserBindInformation GetAdminData()
         {
             string userControlPath = ConfigurationManager.AppSettings["UserControls"].TrimEnd('/');
             UserBindInformation ctrl = new UserBindInformation();
             System.Web.UI.Page page = new Page();
             HtmlForm form = new HtmlForm();
 
-            List<DataListInfo> userList = BLL.CommonBLL.GetUserInfo();
+            List<DataListInfo> userList = BLL.CommonBLL.GetAdminData();
             if (userList.Count > 0)
             {
                 foreach (DataListInfo user in userList)
@@ -230,7 +230,7 @@ namespace Assessment.WebService
         //GetUserInfo
         [System.Web.Services.WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
-        public EditData GetUserInfo(int userID)
+        public EditData GetUserDetail(int userID)
         {
             return BLL.CommonBLL.GetUserDetail(userID);
         }
@@ -240,7 +240,7 @@ namespace Assessment.WebService
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
         public bool UpdateUserInfo(EditData userInfo)
         {
-            return BLL.CommonBLL.UpdateUser(userInfo);
+            return BLL.CommonBLL.UpdateUserInfo(userInfo);
         }
 
         //delete
@@ -260,36 +260,34 @@ namespace Assessment.WebService
         }
         //Chnage the role from dropdown
 
-        //download and upload excel part 
-        //[System.Web.Services.WebMethod(EnableSession = true)]
-        //[System.Web.Script.Services.ScriptMethod]
-        //public string DownloadAllPPE()
-        //{
-        //    return BLL.CommonBLL.DownloadAllPPE();
-        //}
-
-        //[System.Web.Services.WebMethod(EnableSession = true)]
-        //[System.Web.Script.Services.ScriptMethod]
-        //public bool CheckPPEFileExist(string fileName)
-        //{
-        //    string logFilePath = ConfigurationManager.AppSettings["LogFileLocation"] + fileName;
-        //    if (File.Exists(logFilePath))
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
 
         //download and upload 
-        //[System.Web.Services.WebMethod(EnableSession = true)]
-        //[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
-        //public bool DownloadUserInfoTemplate()
-        //{
-        //        return BLL.CommonBLL.DownloadUserInfoTemplate();
+        [System.Web.Services.WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+        public string DownloadUserInfoTemplate()
+        {
+            return BLL.CommonBLL.DownloadUserInfoTemplate();
 
+        }
+
+        #region Common
+
+        [System.Web.Services.WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod]
+        public bool CheckFileExist(string fileName)
+        {
+            string logFilePath = ConfigurationManager.AppSettings["LogFileLocation"] + fileName;
+            if (File.Exists(logFilePath))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
     }
 
 

@@ -28,29 +28,22 @@
     });
 }
 
-function LoadUserDetails(userId, _emailId, _password) {
-    if (!_emailId || !_password) {
+function LoadUserDetails(userId, emailId, password) {
+    if (!emailId || !password) {
         console.error("Email or password is missing.");
         return;
     }
-
-    //alert("Function getting called");
     $.ajax({
         type: "POST",
         url: "WebService/UserRegistration.asmx/LogInfo",
         data: JSON.stringify({
-            _email: _emailId,
-            _password: _password
+            email: emailId,
+            password: password
         }),
-        contentType: "application/json; charset=utf-8", // Corrected case
+        contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
             if (response.d) {
-                //console.log($("#failedLoginTable").find('tbody'));
-                //const rows = $.parseHTML(response.d);
-                //$("#failedLoginTable").find('tbody').append(rows);
-                /*$('#tbdlog').empty();*/
-                //$("#failedLoginTable").find('tbody').append(response.d);
                 $("#failedLoginTable").find('#tbdlog').append(response.d.HTMLDataList);
             } else {
                 console.log("No data returned from the server.");

@@ -8,12 +8,12 @@ namespace Assessment.BLL
 {
     public class CommonBLL
     {
-        public static int RegistrationDetails(string firstName, string lastName, string emailId, string mobileNo, string password)
+        public static int RegistrationDetails(string firstName, string lastName, string emailId, string mobileNo, string password,string role)
         {
             ServiceReference1.UserServiceClient service = new ServiceReference1.UserServiceClient();
             try
             {
-                int test = service.RegistrationDetails(firstName, lastName, emailId, mobileNo, password);
+                int test = service.RegistrationDetails(firstName, lastName, emailId, mobileNo, password,role);
                 service.Close();
                 return test;
             }
@@ -76,12 +76,12 @@ namespace Assessment.BLL
         }
 
         ///fetch data
-        public static List<DataListInfo> GetUserInfo()
+        public static List<DataListInfo> GetAdminData()
         {
             ServiceReference1.UserServiceClient service = new ServiceReference1.UserServiceClient();
             try
             {
-                List<DataListInfo> userList = service.FetchUserData().ToList();
+                List<DataListInfo> userList = service.GetAdminData().ToList();
                 return userList;
 
             }
@@ -136,7 +136,7 @@ namespace Assessment.BLL
             ServiceReference1.UserServiceClient service = new ServiceReference1.UserServiceClient();
             try
             {
-                EditData userList = service.GetUsers(userID);
+                EditData userList = service.GetUserDetail(userID);
                 return userList;
 
             }
@@ -148,12 +148,12 @@ namespace Assessment.BLL
             }
         }
 
-        public static bool UpdateUser(EditData userInfo)
+        public static bool UpdateUserInfo(EditData userInfo)
         {
             ServiceReference1.UserServiceClient service = new ServiceReference1.UserServiceClient();
             try
             {
-                bool output = service.UpdateUserData(userInfo);
+                bool output = service.UpdateUserInfo(userInfo);
                 service.Close();
                 return output;
 
@@ -173,7 +173,7 @@ namespace Assessment.BLL
             ServiceReference1.UserServiceClient service = new ServiceReference1.UserServiceClient();
             try
             {
-                string result = service.DeleteUserId(userid);
+                string result = service.DeleteUser(userid);
                 service.Close();
                 return result;
 
@@ -206,40 +206,56 @@ namespace Assessment.BLL
         }
         //Chnage the role from dropdown
 
-        //Download and upload excel 
-        //public static string DownloadAllPPE()
-        //{
-        //    ServiceReference1.UserServiceClient service = new ServiceReference1.UserServiceClient();
-        //    try
-        //    {
-        //        string output = service.DownloadAllPPE();
-        //        service.Close();
-        //        return output;
-        //    }
-        //    catch
-        //    {
-        //        service.Abort();
-        //        throw;
-        //    }
-        //}
+        //Load admin name in admin page
+        public static string GetAdminFirstName(int userId)
+        {
+            ServiceReference1.UserServiceClient service = new ServiceReference1.UserServiceClient();
+            try
+            {
+                string adminFirstName= service.GetAdminFirstName(userId);
+                service.Close();
+                return adminFirstName;
+                
+            }
+            catch (Exception ex)
+            {
+                service.Abort();
+                throw ex;
+            }
 
+        }
         //Download and upload Excel
+        public static string UploadUserDetails(string fileName)
+        {
+            ServiceReference1.UserServiceClient service = new ServiceReference1.UserServiceClient();
+            try
+            {
+                string output = service.UploadUserDetails(fileName);
+                service.Close();
+                return output;
+            }
+            catch (Exception ex)
+            {
+                service.Abort();
+                throw ex;
+            }
+        }
 
-        //public static string DownloadUserInfoTemplate()
-        //{
-        //    ServiceReference1.UserServiceClient service = new ServiceReference1.UserServiceClient();
-        //    try
-        //    {
-        //        string output = service.DownloadCreateUserInfoTemplate();
-        //        service.Close();
-        //        return output;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        service.Abort();
-        //        throw ex;
-        //    }
-        //}
+        public static string DownloadUserInfoTemplate()
+        {
+            ServiceReference1.UserServiceClient service = new ServiceReference1.UserServiceClient();
+            try
+            {
+                string output = service.DownloadUserInfoTemplate();
+                service.Close();
+                return output;
+            }
+            catch (Exception ex)
+            {
+                service.Abort();
+                throw ex;
+            }
+        }
 
     }
 }

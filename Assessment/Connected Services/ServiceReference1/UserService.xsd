@@ -9,6 +9,7 @@
         <xs:element minOccurs="0" name="emailId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="mobileNo" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="role" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -98,43 +99,43 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="FetchUserData">
+  <xs:element name="GetAdminData">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="FetchUserDataResponse">
+  <xs:element name="GetAdminDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Assessment_Service" minOccurs="0" name="FetchUserDataResult" nillable="true" type="q5:ArrayOfDataListInfo" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Assessment_Service" minOccurs="0" name="GetAdminDataResult" nillable="true" type="q5:ArrayOfDataListInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetUsers">
+  <xs:element name="GetUserDetail">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetUsersResponse">
+  <xs:element name="GetUserDetailResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Assessment_Service" minOccurs="0" name="GetUsersResult" nillable="true" type="q6:EditData" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Assessment_Service" minOccurs="0" name="GetUserDetailResult" nillable="true" type="q6:EditData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UpdateUserData">
+  <xs:element name="UpdateUserInfo">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Assessment_Service" minOccurs="0" name="userInfo" nillable="true" type="q7:EditData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UpdateUserDataResponse">
+  <xs:element name="UpdateUserInfoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="UpdateUserDataResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="UpdateUserInfoResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -153,17 +154,57 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="DeleteUserId">
+  <xs:element name="DeleteUser">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userid" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="DeleteUserIdResponse">
+  <xs:element name="DeleteUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="DeleteUserIdResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="DeleteUserResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAdminFirstName">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAdminFirstNameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAdminFirstNameResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadUserDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fileName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadUserDetailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UploadUserDetailsResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadUserInfoTemplate">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadUserInfoTemplateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DownloadUserInfoTemplateResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

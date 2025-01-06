@@ -390,10 +390,10 @@ namespace Assessment.ServiceReference1 {
     public interface IUserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/RegistrationDetails", ReplyAction="http://tempuri.org/IUserService/RegistrationDetailsResponse")]
-        int RegistrationDetails(string firstName, string lastName, string emailId, string mobileNo, string password);
+        int RegistrationDetails(string firstName, string lastName, string emailId, string mobileNo, string password, string role);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/RegistrationDetails", ReplyAction="http://tempuri.org/IUserService/RegistrationDetailsResponse")]
-        System.Threading.Tasks.Task<int> RegistrationDetailsAsync(string firstName, string lastName, string emailId, string mobileNo, string password);
+        System.Threading.Tasks.Task<int> RegistrationDetailsAsync(string firstName, string lastName, string emailId, string mobileNo, string password, string role);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/LoginDetails", ReplyAction="http://tempuri.org/IUserService/LoginDetailsResponse")]
         Assessment.ServiceReference1.UserClass LoginDetails(string emailId, string password);
@@ -425,23 +425,23 @@ namespace Assessment.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UserDetails", ReplyAction="http://tempuri.org/IUserService/UserDetailsResponse")]
         System.Threading.Tasks.Task<int> UserDetailsAsync(int userId, string city, string state, string country, string gender, System.DateTime dob, byte[] profileImage);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/FetchUserData", ReplyAction="http://tempuri.org/IUserService/FetchUserDataResponse")]
-        Assessment.ServiceReference1.DataListInfo[] FetchUserData();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetAdminData", ReplyAction="http://tempuri.org/IUserService/GetAdminDataResponse")]
+        Assessment.ServiceReference1.DataListInfo[] GetAdminData();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/FetchUserData", ReplyAction="http://tempuri.org/IUserService/FetchUserDataResponse")]
-        System.Threading.Tasks.Task<Assessment.ServiceReference1.DataListInfo[]> FetchUserDataAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetAdminData", ReplyAction="http://tempuri.org/IUserService/GetAdminDataResponse")]
+        System.Threading.Tasks.Task<Assessment.ServiceReference1.DataListInfo[]> GetAdminDataAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUsers", ReplyAction="http://tempuri.org/IUserService/GetUsersResponse")]
-        Assessment.ServiceReference1.EditData GetUsers(int userID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserDetail", ReplyAction="http://tempuri.org/IUserService/GetUserDetailResponse")]
+        Assessment.ServiceReference1.EditData GetUserDetail(int userID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUsers", ReplyAction="http://tempuri.org/IUserService/GetUsersResponse")]
-        System.Threading.Tasks.Task<Assessment.ServiceReference1.EditData> GetUsersAsync(int userID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserDetail", ReplyAction="http://tempuri.org/IUserService/GetUserDetailResponse")]
+        System.Threading.Tasks.Task<Assessment.ServiceReference1.EditData> GetUserDetailAsync(int userID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateUserData", ReplyAction="http://tempuri.org/IUserService/UpdateUserDataResponse")]
-        bool UpdateUserData(Assessment.ServiceReference1.EditData userInfo);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateUserInfo", ReplyAction="http://tempuri.org/IUserService/UpdateUserInfoResponse")]
+        bool UpdateUserInfo(Assessment.ServiceReference1.EditData userInfo);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateUserData", ReplyAction="http://tempuri.org/IUserService/UpdateUserDataResponse")]
-        System.Threading.Tasks.Task<bool> UpdateUserDataAsync(Assessment.ServiceReference1.EditData userInfo);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateUserInfo", ReplyAction="http://tempuri.org/IUserService/UpdateUserInfoResponse")]
+        System.Threading.Tasks.Task<bool> UpdateUserInfoAsync(Assessment.ServiceReference1.EditData userInfo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateChangeRole", ReplyAction="http://tempuri.org/IUserService/UpdateChangeRoleResponse")]
         bool UpdateChangeRole(int userId, string role);
@@ -449,11 +449,29 @@ namespace Assessment.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateChangeRole", ReplyAction="http://tempuri.org/IUserService/UpdateChangeRoleResponse")]
         System.Threading.Tasks.Task<bool> UpdateChangeRoleAsync(int userId, string role);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUserId", ReplyAction="http://tempuri.org/IUserService/DeleteUserIdResponse")]
-        string DeleteUserId(int userid);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
+        string DeleteUser(int userid);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUserId", ReplyAction="http://tempuri.org/IUserService/DeleteUserIdResponse")]
-        System.Threading.Tasks.Task<string> DeleteUserIdAsync(int userid);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
+        System.Threading.Tasks.Task<string> DeleteUserAsync(int userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetAdminFirstName", ReplyAction="http://tempuri.org/IUserService/GetAdminFirstNameResponse")]
+        string GetAdminFirstName(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetAdminFirstName", ReplyAction="http://tempuri.org/IUserService/GetAdminFirstNameResponse")]
+        System.Threading.Tasks.Task<string> GetAdminFirstNameAsync(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UploadUserDetails", ReplyAction="http://tempuri.org/IUserService/UploadUserDetailsResponse")]
+        string UploadUserDetails(string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UploadUserDetails", ReplyAction="http://tempuri.org/IUserService/UploadUserDetailsResponse")]
+        System.Threading.Tasks.Task<string> UploadUserDetailsAsync(string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DownloadUserInfoTemplate", ReplyAction="http://tempuri.org/IUserService/DownloadUserInfoTemplateResponse")]
+        string DownloadUserInfoTemplate();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DownloadUserInfoTemplate", ReplyAction="http://tempuri.org/IUserService/DownloadUserInfoTemplateResponse")]
+        System.Threading.Tasks.Task<string> DownloadUserInfoTemplateAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -483,12 +501,12 @@ namespace Assessment.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public int RegistrationDetails(string firstName, string lastName, string emailId, string mobileNo, string password) {
-            return base.Channel.RegistrationDetails(firstName, lastName, emailId, mobileNo, password);
+        public int RegistrationDetails(string firstName, string lastName, string emailId, string mobileNo, string password, string role) {
+            return base.Channel.RegistrationDetails(firstName, lastName, emailId, mobileNo, password, role);
         }
         
-        public System.Threading.Tasks.Task<int> RegistrationDetailsAsync(string firstName, string lastName, string emailId, string mobileNo, string password) {
-            return base.Channel.RegistrationDetailsAsync(firstName, lastName, emailId, mobileNo, password);
+        public System.Threading.Tasks.Task<int> RegistrationDetailsAsync(string firstName, string lastName, string emailId, string mobileNo, string password, string role) {
+            return base.Channel.RegistrationDetailsAsync(firstName, lastName, emailId, mobileNo, password, role);
         }
         
         public Assessment.ServiceReference1.UserClass LoginDetails(string emailId, string password) {
@@ -531,28 +549,28 @@ namespace Assessment.ServiceReference1 {
             return base.Channel.UserDetailsAsync(userId, city, state, country, gender, dob, profileImage);
         }
         
-        public Assessment.ServiceReference1.DataListInfo[] FetchUserData() {
-            return base.Channel.FetchUserData();
+        public Assessment.ServiceReference1.DataListInfo[] GetAdminData() {
+            return base.Channel.GetAdminData();
         }
         
-        public System.Threading.Tasks.Task<Assessment.ServiceReference1.DataListInfo[]> FetchUserDataAsync() {
-            return base.Channel.FetchUserDataAsync();
+        public System.Threading.Tasks.Task<Assessment.ServiceReference1.DataListInfo[]> GetAdminDataAsync() {
+            return base.Channel.GetAdminDataAsync();
         }
         
-        public Assessment.ServiceReference1.EditData GetUsers(int userID) {
-            return base.Channel.GetUsers(userID);
+        public Assessment.ServiceReference1.EditData GetUserDetail(int userID) {
+            return base.Channel.GetUserDetail(userID);
         }
         
-        public System.Threading.Tasks.Task<Assessment.ServiceReference1.EditData> GetUsersAsync(int userID) {
-            return base.Channel.GetUsersAsync(userID);
+        public System.Threading.Tasks.Task<Assessment.ServiceReference1.EditData> GetUserDetailAsync(int userID) {
+            return base.Channel.GetUserDetailAsync(userID);
         }
         
-        public bool UpdateUserData(Assessment.ServiceReference1.EditData userInfo) {
-            return base.Channel.UpdateUserData(userInfo);
+        public bool UpdateUserInfo(Assessment.ServiceReference1.EditData userInfo) {
+            return base.Channel.UpdateUserInfo(userInfo);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdateUserDataAsync(Assessment.ServiceReference1.EditData userInfo) {
-            return base.Channel.UpdateUserDataAsync(userInfo);
+        public System.Threading.Tasks.Task<bool> UpdateUserInfoAsync(Assessment.ServiceReference1.EditData userInfo) {
+            return base.Channel.UpdateUserInfoAsync(userInfo);
         }
         
         public bool UpdateChangeRole(int userId, string role) {
@@ -563,12 +581,36 @@ namespace Assessment.ServiceReference1 {
             return base.Channel.UpdateChangeRoleAsync(userId, role);
         }
         
-        public string DeleteUserId(int userid) {
-            return base.Channel.DeleteUserId(userid);
+        public string DeleteUser(int userid) {
+            return base.Channel.DeleteUser(userid);
         }
         
-        public System.Threading.Tasks.Task<string> DeleteUserIdAsync(int userid) {
-            return base.Channel.DeleteUserIdAsync(userid);
+        public System.Threading.Tasks.Task<string> DeleteUserAsync(int userid) {
+            return base.Channel.DeleteUserAsync(userid);
+        }
+        
+        public string GetAdminFirstName(int userId) {
+            return base.Channel.GetAdminFirstName(userId);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetAdminFirstNameAsync(int userId) {
+            return base.Channel.GetAdminFirstNameAsync(userId);
+        }
+        
+        public string UploadUserDetails(string fileName) {
+            return base.Channel.UploadUserDetails(fileName);
+        }
+        
+        public System.Threading.Tasks.Task<string> UploadUserDetailsAsync(string fileName) {
+            return base.Channel.UploadUserDetailsAsync(fileName);
+        }
+        
+        public string DownloadUserInfoTemplate() {
+            return base.Channel.DownloadUserInfoTemplate();
+        }
+        
+        public System.Threading.Tasks.Task<string> DownloadUserInfoTemplateAsync() {
+            return base.Channel.DownloadUserInfoTemplateAsync();
         }
     }
 }
