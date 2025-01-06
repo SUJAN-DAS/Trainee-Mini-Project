@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ExcelLibrary">
+      <HintPath>..\..\..\..\Vegam4i_Projects\vegam4icomplete\DLL_Dependencies\ExcelLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Practices.EnterpriseLibrary.2008.4.1\lib\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -61,7 +64,9 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
+    <Reference Include="System.Web">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -152,14 +157,15 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="ScriptResources\AdminScriptResource.js" />
     <Content Include="Scripts\Admin.js" />
+    <Content Include="Scripts\ajaxfileupload.js" />
     <Content Include="Scripts\FailedLogin.js" />
+    <Content Include="Scripts\jquery-3.5.1.min.js" />
     <Content Include="Scripts\User.js" />
     <Content Include="User.aspx" />
     <Content Include="UserControls\DataSummary.ascx" />
     <Content Include="UserControls\LogFailedSummary.ascx" />
     <Content Include="UserDetailPage.aspx" />
     <Content Include="WebService\UserRegistration.asmx" />
-    <Content Include="HandlerFiles\DownloadHandler.ashx" />
     <Content Include="ExcelFormat\RegisteredDetails.xlsx" />
     <None Include="Connected Services\ServiceReference1\UserService.wsdl" />
     <None Include="Connected Services\ServiceReference1\UserService.xsd">
@@ -171,6 +177,8 @@
     <None Include="Connected Services\ServiceReference1\UserService2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="HandlerFiles\DownloadHandler.ashx" />
+    <Content Include="HandlerFiles\UserInfoUploadHandler.ashx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Login.aspx" />
     <Content Include="Registration.aspx" />
@@ -237,6 +245,9 @@
     </Compile>
     <Compile Include="HandlerFiles\DownloadHandler.ashx.cs">
       <DependentUpon>DownloadHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="HandlerFiles\UserInfoUploadHandler.ashx.cs">
+      <DependentUpon>UserInfoUploadHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

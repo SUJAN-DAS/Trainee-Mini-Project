@@ -43,23 +43,23 @@
   <wsdl:message name="IUserService_UserDetails_OutputMessage">
     <wsdl:part name="parameters" element="tns:UserDetailsResponse" />
   </wsdl:message>
-  <wsdl:message name="IUserService_FetchUserData_InputMessage">
-    <wsdl:part name="parameters" element="tns:FetchUserData" />
+  <wsdl:message name="IUserService_GetAdminData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdminData" />
   </wsdl:message>
-  <wsdl:message name="IUserService_FetchUserData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:FetchUserDataResponse" />
+  <wsdl:message name="IUserService_GetAdminData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdminDataResponse" />
   </wsdl:message>
-  <wsdl:message name="IUserService_GetUsers_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetUsers" />
+  <wsdl:message name="IUserService_GetUserDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDetail" />
   </wsdl:message>
-  <wsdl:message name="IUserService_GetUsers_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetUsersResponse" />
+  <wsdl:message name="IUserService_GetUserDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDetailResponse" />
   </wsdl:message>
-  <wsdl:message name="IUserService_UpdateUserData_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateUserData" />
+  <wsdl:message name="IUserService_UpdateUserInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserInfo" />
   </wsdl:message>
-  <wsdl:message name="IUserService_UpdateUserData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateUserDataResponse" />
+  <wsdl:message name="IUserService_UpdateUserInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserInfoResponse" />
   </wsdl:message>
   <wsdl:message name="IUserService_UpdateChangeRole_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateChangeRole" />
@@ -67,11 +67,29 @@
   <wsdl:message name="IUserService_UpdateChangeRole_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateChangeRoleResponse" />
   </wsdl:message>
-  <wsdl:message name="IUserService_DeleteUserId_InputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteUserId" />
+  <wsdl:message name="IUserService_DeleteUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUser" />
   </wsdl:message>
-  <wsdl:message name="IUserService_DeleteUserId_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteUserIdResponse" />
+  <wsdl:message name="IUserService_DeleteUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetAdminFirstName_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdminFirstName" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetAdminFirstName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdminFirstNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_UploadUserDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadUserDetails" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_UploadUserDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadUserDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DownloadUserInfoTemplate_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadUserInfoTemplate" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DownloadUserInfoTemplate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadUserInfoTemplateResponse" />
   </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="RegistrationDetails">
@@ -98,25 +116,37 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/UserDetails" message="tns:IUserService_UserDetails_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UserDetailsResponse" message="tns:IUserService_UserDetails_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="FetchUserData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/FetchUserData" message="tns:IUserService_FetchUserData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/FetchUserDataResponse" message="tns:IUserService_FetchUserData_OutputMessage" />
+    <wsdl:operation name="GetAdminData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetAdminData" message="tns:IUserService_GetAdminData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetAdminDataResponse" message="tns:IUserService_GetAdminData_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetUsers">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUsers" message="tns:IUserService_GetUsers_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUsersResponse" message="tns:IUserService_GetUsers_OutputMessage" />
+    <wsdl:operation name="GetUserDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUserDetail" message="tns:IUserService_GetUserDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUserDetailResponse" message="tns:IUserService_GetUserDetail_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="UpdateUserData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/UpdateUserData" message="tns:IUserService_UpdateUserData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UpdateUserDataResponse" message="tns:IUserService_UpdateUserData_OutputMessage" />
+    <wsdl:operation name="UpdateUserInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/UpdateUserInfo" message="tns:IUserService_UpdateUserInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UpdateUserInfoResponse" message="tns:IUserService_UpdateUserInfo_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UpdateChangeRole">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/UpdateChangeRole" message="tns:IUserService_UpdateChangeRole_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UpdateChangeRoleResponse" message="tns:IUserService_UpdateChangeRole_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="DeleteUserId">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/DeleteUserId" message="tns:IUserService_DeleteUserId_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/DeleteUserIdResponse" message="tns:IUserService_DeleteUserId_OutputMessage" />
+    <wsdl:operation name="DeleteUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/DeleteUser" message="tns:IUserService_DeleteUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/DeleteUserResponse" message="tns:IUserService_DeleteUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAdminFirstName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetAdminFirstName" message="tns:IUserService_GetAdminFirstName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetAdminFirstNameResponse" message="tns:IUserService_GetAdminFirstName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadUserDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/UploadUserDetails" message="tns:IUserService_UploadUserDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UploadUserDetailsResponse" message="tns:IUserService_UploadUserDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadUserInfoTemplate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/DownloadUserInfoTemplate" message="tns:IUserService_DownloadUserInfoTemplate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/DownloadUserInfoTemplateResponse" message="tns:IUserService_DownloadUserInfoTemplate_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -175,8 +205,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="FetchUserData">
-      <soap:operation soapAction="http://tempuri.org/IUserService/FetchUserData" style="document" />
+    <wsdl:operation name="GetAdminData">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetAdminData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -184,8 +214,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetUsers">
-      <soap:operation soapAction="http://tempuri.org/IUserService/GetUsers" style="document" />
+    <wsdl:operation name="GetUserDetail">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetUserDetail" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -193,8 +223,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="UpdateUserData">
-      <soap:operation soapAction="http://tempuri.org/IUserService/UpdateUserData" style="document" />
+    <wsdl:operation name="UpdateUserInfo">
+      <soap:operation soapAction="http://tempuri.org/IUserService/UpdateUserInfo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -211,8 +241,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DeleteUserId">
-      <soap:operation soapAction="http://tempuri.org/IUserService/DeleteUserId" style="document" />
+    <wsdl:operation name="DeleteUser">
+      <soap:operation soapAction="http://tempuri.org/IUserService/DeleteUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAdminFirstName">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetAdminFirstName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadUserDetails">
+      <soap:operation soapAction="http://tempuri.org/IUserService/UploadUserDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadUserInfoTemplate">
+      <soap:operation soapAction="http://tempuri.org/IUserService/DownloadUserInfoTemplate" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

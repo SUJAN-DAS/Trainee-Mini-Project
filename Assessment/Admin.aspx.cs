@@ -12,28 +12,29 @@ namespace Assessment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //btnDownloadPPE.Attributes.Add("onclick", "javascript:DownloadPPECode('btnDownloadPPE.ClientID');return false;");
+            if (!IsPostBack)
+            {
+                if (Request.QueryString["userId"] != null)
+                {
+                    int userId = Convert.ToInt32(Request.QueryString["userId"]);
+                    string adminFirstName = BLL.CommonBLL.GetAdminFirstName(userId);
 
-            //if (HttpContext.Current.User.Identity.IsAuthenticated)
-            //{
-            //    string loggedInUser = HttpContext.Current.User.Identity.Name;
-            //    lblAdminName.Text = "Admin: " + loggedInUser;
+                    ClientScript.RegisterStartupScript(this.GetType(), "setAdminName",
+                        $"document.getElementById('lblAdminName').innerHTML = 'Admin {adminFirstName}';", true);
+                }
 
-            //}
-            //if (!IsPostBack)
-            //{
-            //    #region Script_Resource_Refernce
-            //    ScriptReference scriptReference = new ScriptReference();
-            //    scriptReference.Path = ConfigurationManager.AppSettings["jsPath"].ToString().TrimEnd('/') + "/ScriptResources/UserScriptResource_v2.js";
+                #region Script_Resource_Refernce
+                ScriptReference scriptReference = new ScriptReference();
+                scriptReference.Path = ConfigurationManager.AppSettings["jsPath"].ToString().TrimEnd('/') + "/ScriptResources/AdminScriptResource.js";
 
-            //    BLL.GetCultures(ref scriptReference, this.CurrentUser.Language);
-            //    scriptReference.Path = scriptReference.Path + "?v=" + VersionNumber;
-            //    ScriptManager1.Scripts.Add(scriptReference);
-            //    #endregion
+                scriptReference.Path = scriptReference.Path;
+                ScriptManager1.Scripts.Add(scriptReference);
+                #endregion
+                uploadFile.Attributes.Add("onchange", "javascript:UploadExcelFile('" + uploadFile.ClientID + "');");
+                //btnDownloadUserInfo.Attributes.Add("onclick", "javascript:DownloadAllLogFail('" + btnDownloadUserInfo.ClientID + "' );return false;");
+            }
 
-            //    btnDownloadUserInfo.Attributes.Add("onclick", "javascript:DownloadAllUserInfo('" + btnDownloadUserInfo.ClientID + "' );return false;");
-            //}
-           
+
         }
     }
 }

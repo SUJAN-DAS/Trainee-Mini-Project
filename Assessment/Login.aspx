@@ -55,7 +55,7 @@
 <body>
     <div class="container">
         <div class="form-container">
-            <form id="form1" runat="server" class="form-container" onsubmit="login(event)">
+            <form id="form1" runat="server" class="form-container" onsubmit="Login(event)">
                 <div class="login-container">
                     <h1>Login</h1>
                     <input id="txtEmail" type="text" placeholder="Email Id"/>

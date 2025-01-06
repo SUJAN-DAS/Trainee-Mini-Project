@@ -13,25 +13,29 @@ namespace Assessment_DAL
 {
     public class Registration
     {
-        public static int RegisterData(Database db, string firstName, string lastName, string emailId, string mobileNo, string password)
+        public static int RegisterData(Database db, string firstName, string lastName, string emailId, string mobileNo, string password,string role)
         {
             string hashedPassword = HashPassword(password);
             StringBuilder sqlCmdBuilder = new StringBuilder();
             sqlCmdBuilder.Append(" INSERT INTO LDB1_LOGININFOTABLE_SUJAN ");
-            sqlCmdBuilder.Append("(FFNAME, FLNAME, FMOB, FEMAILID, FPASSWORD, FROLEID) ");  
-            sqlCmdBuilder.Append(" VALUES (:FIRSTNAME, :LASTNAME, :MOBILE, :EMAILID, :PASSWORD, :ROLEID) "); 
+            sqlCmdBuilder.Append(" ( FFNAME, FLNAME, FMOB, FEMAILID, FPASSWORD, FROLEID) ");
+            sqlCmdBuilder.Append(" VALUES (");
+            sqlCmdBuilder.Append(" :FIRSTNAME, :LASTNAME, :MOBILE, :EMAILID, :PASSWORD, ");
+            sqlCmdBuilder.Append(" ( SELECT FROLEID FROM LDB1_ROLEINFOTABLE_SUJAN WHERE FROLENAME = :ROLENAME))");
+
+
 
             System.Data.Common.DbCommand dbCmd = db.GetSqlStringCommand(sqlCmdBuilder.ToString());
 
             // Adding parameters for the user data
             db.AddInParameter(dbCmd, ":FIRSTNAME", DbType.String, firstName);
             db.AddInParameter(dbCmd, ":LASTNAME", DbType.String, lastName);
-            db.AddInParameter(dbCmd, ":MOBILE", DbType.String, mobileNo);  
-            db.AddInParameter(dbCmd, ":EMAILID", DbType.String, emailId); 
+            db.AddInParameter(dbCmd, ":MOBILE", DbType.String, mobileNo);
+            db.AddInParameter(dbCmd, ":EMAILID", DbType.String, emailId);
             db.AddInParameter(dbCmd, ":PASSWORD", DbType.String, hashedPassword);
 
-            
-            db.AddInParameter(dbCmd, ":ROLEID", DbType.Int32, 2);
+
+            db.AddInParameter(dbCmd, ":ROLENAME", DbType.String, role);
 
             return db.ExecuteNonQuery(dbCmd);
         }
@@ -54,7 +58,7 @@ namespace Assessment_DAL
         }
 
 
-        public static IDataReader LoginData(Database db,string emailId,string password)
+        public static IDataReader LoginData(Database db, string emailId, string password)
         {
             string hashedPassword = HashPassword(password);
             //int role = 0;
@@ -64,7 +68,7 @@ namespace Assessment_DAL
 
             System.Data.Common.DbCommand dbCmd = db.GetSqlStringCommand(sqlCmdBuilder.ToString());
 
-            
+
             db.AddInParameter(dbCmd, ":EMAILID", DbType.String, emailId);
             db.AddInParameter(dbCmd, ":PASSWORD", DbType.String, hashedPassword);
 
@@ -79,7 +83,7 @@ namespace Assessment_DAL
 
         }
         //LoginFailedData
-        
+
         public static bool LoginFailedData(Database db, string emailId, string password)
         {
             try
@@ -98,7 +102,7 @@ namespace Assessment_DAL
                 db.AddInParameter(dbCmd, ":Timestamp", DbType.DateTime, DateTime.Now);
                 Console.WriteLine("Executing SQL: " + sqlCmdBuilder.ToString());
 
-                return db.ExecuteNonQuery(dbCmd)>0;
+                return db.ExecuteNonQuery(dbCmd) > 0;
 
             }
             catch (Exception ex)
@@ -132,7 +136,7 @@ namespace Assessment_DAL
             return db.ExecuteNonQuery(dbCmd);
         }
 
-        public static DataTable GetUserData(Database db)
+        public static DataTable GetAdminData(Database db)
         {
             StringBuilder sqlCmdBuilder = new StringBuilder();
 
@@ -168,53 +172,10 @@ namespace Assessment_DAL
             return db.ExecuteDataSet(dbCmd).Tables[0];
         }
 
-        //Login failed fetch
-        //public static DataTable GetLogInfo(Database db, string emailId, string password)
-        //{
-        //    try
-        //    {
-        //        string hashedPassword = HashPassword(password);
-        //        StringBuilder sqlCmdBuilder = new StringBuilder();
-
-        //        // Check if the username exists and increment the failed attempts count
-        //        sqlCmdBuilder.Append("BEGIN ");
-        //        sqlCmdBuilder.Append(" IF EXISTS (SELECT 1 FROM LDB1_FAILLOGIN_SUJAN WHERE FUSERNAME = :EmailId) THEN ");
-        //        sqlCmdBuilder.Append(" UPDATE LDB1_FAILLOGIN_SUJAN ");
-        //        sqlCmdBuilder.Append(" SET FFAILEDATTEMPTSCOUNT = FFAILEDATTEMPTSCOUNT + 1, ");
-        //        sqlCmdBuilder.Append(" FTIMESTAMP = :Timestamp,FPASSWORD=:PASSWORD");
-        //        sqlCmdBuilder.Append(" WHERE FUSERNAME = :EmailId");
-        //        sqlCmdBuilder.Append(" ELSE ");
-        //        sqlCmdBuilder.Append(" INSERT INTO LDB1_FAILLOGIN_SUJAN (FUSERNAME, FPASSWORD, FFAILEDATTEMPTSCOUNT, FTIMESTAMP) ");
-        //        sqlCmdBuilder.Append(" VALUES (:EmailId, :PASSWORD, 1, :Timestamp); ");
-        //        sqlCmdBuilder.Append(" END IF; ");
-        //        sqlCmdBuilder.Append(" END; ");
-
-        //        // Query to get all fields from the table
-        //        sqlCmdBuilder.Append(" SELECT FUSERNAME, FPASSWORD, FTIMESTAMP, FFAILEDATTEMPTSCOUNT ");
-        //        sqlCmdBuilder.Append(" FROM LDB1_FAILLOGIN_SUJAN;");
-
-        //        // Create the database command
-        //        System.Data.Common.DbCommand dbCmd = db.GetSqlStringCommand(sqlCmdBuilder.ToString());
-
-        //        db.AddInParameter(dbCmd, ":EmailId", DbType.String, emailId);
-        //        db.AddInParameter(dbCmd, ":PASSWORD", DbType.String, hashedPassword);
-        //        db.AddInParameter(dbCmd, ":Timestamp", DbType.DateTime, DateTime.Now);
-
-        //        // Execute the command and return the result as a DataTable
-        //        DataSet dataSet = db.ExecuteDataSet(dbCmd);
-        //        return dataSet.Tables[0];
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Log exception details for debugging
-        //        Console.WriteLine($"Error: {ex.Message}");
-        //        throw;
-        //    }
-        //}
         //trail
         public static bool CheckMailExist(Database db, string emailId)
         {
-            
+
             StringBuilder sqlCmdBuilder = new StringBuilder();
             sqlCmdBuilder.Append(" SELECT COUNT(*) FROM LDB1_FAILLOGIN_SUJAN ");
             sqlCmdBuilder.Append(" WHERE FUSERNAME = :EmailId");
@@ -222,7 +183,7 @@ namespace Assessment_DAL
 
             db.AddInParameter(dbCmd, ":EmailId", DbType.String, emailId);
             int count = Convert.ToInt32(db.ExecuteScalar(dbCmd));
-           if(count > 0)
+            if (count > 0)
             {
                 return true;
             }
@@ -230,7 +191,7 @@ namespace Assessment_DAL
             {
                 return false;
             }
-                
+
         }
 
         public static void UpdateMailAttempt(Database db, string emailId, string password)
@@ -303,7 +264,7 @@ namespace Assessment_DAL
         //Login failed fetch
 
         //Get user info
-        public static DataTable GetUsers(Database db, int userID)
+        public static DataTable GetUserDetail(Database db, int userID)
         {
             StringBuilder sqlCmdBuilder = new StringBuilder();
             sqlCmdBuilder.Append(" SELECT FUSERID,FFNAME, FLNAME, FEMAILID");//remove role from here
@@ -352,15 +313,12 @@ namespace Assessment_DAL
         //Update role from drop down 
 
         //TO UPDATE USER DATA
-        public static bool UpdateUserData(Database db, int userId, string firstName, string lastName, string email)
+        public static bool UpdateUserInfo(Database db, int userId, string firstName, string lastName, string email)
         {
             StringBuilder sqlCmdBuilder = new StringBuilder();
-            sqlCmdBuilder.Append(" UPDATE LDB1_LOGININFOTABLE_SUJAN SET FFNAME=:FIRSTNAME,FLNAME=:LASTNAME, FEMAILID=:EMAILID");//remove role
+            sqlCmdBuilder.Append(" UPDATE LDB1_LOGININFOTABLE_SUJAN SET FFNAME=:FIRSTNAME,FLNAME=:LASTNAME, FEMAILID=:EMAILID");
             sqlCmdBuilder.Append(" WHERE FUSERID=:UserId");
-            //sqlCmdBuilder.Append(" UPDATE LDB1_LOGININFOTABLE_SUJAN SET FFNAME=:FIRSTNAME, FLNAME=:LASTNAME, FEMAILID=:EMAILID, ");
-            //sqlCmdBuilder.Append(" FROLEID = (SELECT FROLEID FROM LDB1_ROLEINFOTABLE_SUJAN WHERE FROLENAME = :ROLENAME) ");
-            //sqlCmdBuilder.Append(" WHERE FUSERID = :UserId");
-
+            
             try
             {
                 System.Data.Common.DbCommand dbCmd = db.GetSqlStringCommand(sqlCmdBuilder.ToString());
@@ -386,7 +344,7 @@ namespace Assessment_DAL
         }
 
         //Delete User
-        public static string DeleteUserData(Database db, int userid)
+        public static string DeleteUser(Database db, int userid)
         {
             StringBuilder sqlCmdBuilder = new StringBuilder();
             sqlCmdBuilder.Append("DELETE FROM LDB1_LOGININFOTABLE_SUJAN WHERE FUSERID=:UserId");
@@ -415,26 +373,165 @@ namespace Assessment_DAL
 
         }
 
-        //public static IDataReader GetPPEForSendToExcel(Database db)
-        //{
-        //    StringBuilder sqlCmdBuilder = new StringBuilder();
-        //    sqlCmdBuilder.Append(" SELECT FUSERID,FFNAME, FLNAME, FEMAILID, FROLEID");
+        //Load admin name in admin page
+        public static string GetAdminFirstName(Database db, int userId)
+        {
+            try
+            {
+                StringBuilder sqlCmdBuilder = new StringBuilder();
+                sqlCmdBuilder.Append("SELECT FFNAME FROM LDB1_LOGININFOTABLE_SUJAN ");
+                sqlCmdBuilder.Append("WHERE FUSERID = :UserId");
 
-        //    sqlCmdBuilder.Append(" FROM LDB1_LOGININFOTABLE_SUJAN L");
-            
-        //    //sqlCmdBuilder.Append(" LEFT OUTER JOIN LDB1_MATERIAL_PPE M ON M.FPPECODE = C.FPPECODE AND C.FSITEID =M.FSITEID ");
-        //    //sqlCmdBuilder.Append(" LEFT OUTER JOIN LDB1_PLANTPPE P ON M.FPPEID  = P.FPPEID AND M.FSITEID=P.FSITEID ");
-        //    //sqlCmdBuilder.Append(" LEFT OUTER JOIN LDB1_USERINFO UI ON UI.FUSERID = DECODE(NVL(C.FUPDATEDBY,0),0,C.FCREATEDBY,C.FUPDATEDBY) ");
-        //    //sqlCmdBuilder.Append(" WHERE C.FSITEID=:SITEID ");
-        //    //sqlCmdBuilder.Append(" GROUP BY C.FPPECODE,C.FMATERIALTYPE,DECODE(NVL(C.FUPDATEDON,0),0,C.FCREATEDDATE,C.FUPDATEDON) ,CONCAT(CONCAT(NVL(INITCAP(UI.FLASTNAME),''), ' '), NVL(INITCAP(UI.FFIRSTNAME),'')) ");
-        //    //sqlCmdBuilder.Append(" ORDER BY C.FPPECODE  ");
+                DbCommand dbCmd = db.GetSqlStringCommand(sqlCmdBuilder.ToString());
+                dbCmd.CommandType = CommandType.Text;
 
-        //    DbCommand dbCmd = db.GetSqlStringCommand(sqlCmdBuilder.ToString());
-        //    dbCmd.CommandType = CommandType.Text;
-        //    //db.AddInParameter(dbCmd, ":SITEID", DbType.Int32, siteID);
-        //    //return db.ExecuteReader(DBParserBAL.ParseQueryForAnyDB(dbCmd));
-        //    return db.ExecuteReader(dbCmd);
+                db.AddInParameter(dbCmd, ":UserId", DbType.Int32, userId);
+                string firstName = (string)db.ExecuteScalar(dbCmd);
 
-        //}
+                return firstName;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error fetching admin first name.", ex);
+            }
+        }
+
+
+        //Upload User Excel
+
+        public static IDataReader CheckEmailIDExist(Database db, DbTransaction transaction, int userID, string emailID)
+        {
+            StringBuilder sqlCmdBuilder = new StringBuilder();
+            sqlCmdBuilder.Append(" SELECT FUSERID, FEMAILID, FFNAME, FLNAME, FMOB ");
+            sqlCmdBuilder.Append(" FROM LDB1_LOGININFOTABLE_SUJAN ");
+            sqlCmdBuilder.Append(" WHERE UPPER(FEMAILID) = UPPER(:EMAILID) ");
+
+            if (userID != 0)
+            {
+                sqlCmdBuilder.Append(" AND FUSERID <> :USERID ");
+            }
+            System.Data.Common.DbCommand dbCmd = db.GetSqlStringCommand(sqlCmdBuilder.ToString());
+            dbCmd.CommandType = CommandType.Text;
+
+            db.AddInParameter(dbCmd, ":EMAILID", DbType.String, emailID.Trim());
+
+            if (userID != 0)
+            {
+                db.AddInParameter(dbCmd, ":USERID", DbType.Int32, userID);
+            }
+
+            if (transaction != null)
+            {
+                return db.ExecuteReader(dbCmd, transaction);
+            }
+            else
+            {
+                return db.ExecuteReader(dbCmd);
+            }
+        }
+
+        public static void UpdateUserInfo(Database db, System.Data.Common.DbTransaction transaction, int userID, string password, string firstName, string lastName, string emailID, string mobileNumber)
+        {
+            // Hash the password before saving it
+            string hashedPassword = HashPassword(password);
+
+            // Build the SQL command to update the user info
+            StringBuilder sqlCmdBuilder = new StringBuilder();
+            sqlCmdBuilder.Append(" UPDATE LDB1_LOGININFOTABLE_SUJAN ");
+            sqlCmdBuilder.Append(" SET FFNAME = :FIRSTNAME, ");
+            sqlCmdBuilder.Append(" FLNAME = :LASTNAME, ");
+            sqlCmdBuilder.Append(" FMOB = :MOBILENUMBER, ");
+            sqlCmdBuilder.Append(" FPASSWORD = :PASSWORD ");
+            sqlCmdBuilder.Append(" WHERE FUSERID = :USERID AND FEMAILID = :EMAILID");
+
+            // Create the database command
+            System.Data.Common.DbCommand dbCmd = db.GetSqlStringCommand(sqlCmdBuilder.ToString());
+            dbCmd.CommandType = CommandType.Text;
+
+            // Add parameters to prevent SQL injection
+            db.AddInParameter(dbCmd, ":USERID", DbType.Int32, userID);
+            db.AddInParameter(dbCmd, ":FIRSTNAME", DbType.String, firstName.Trim());
+            db.AddInParameter(dbCmd, ":LASTNAME", DbType.String, lastName.Trim());
+            db.AddInParameter(dbCmd, ":EMAILID", DbType.String, emailID.Trim());
+            db.AddInParameter(dbCmd, ":MOBILENUMBER", DbType.String, mobileNumber.Trim());
+            db.AddInParameter(dbCmd, ":PASSWORD", DbType.String, hashedPassword);
+
+            // Execute the command with or without a transaction
+            if (transaction != null)
+            {
+                db.ExecuteNonQuery(dbCmd, transaction);
+            }
+            else
+            {
+                db.ExecuteNonQuery(dbCmd);
+            }
+        }
+
+        public static bool CheckMobileNoExist(Database db, string mobileNumber, int userID)
+        {
+            IDataReader dataReaderCheck = null;
+            StringBuilder sqlCmdBuilder = new StringBuilder();
+            sqlCmdBuilder.Append(" SELECT FUSERID ");
+            sqlCmdBuilder.Append(" FROM LDB1_LOGININFOTABLE_SUJAN ");
+            sqlCmdBuilder.Append(" WHERE FMOB = :MOBILENUMBER ");
+
+            if (userID != 0)
+            {
+                sqlCmdBuilder.Append(" AND FUSERID <> :USERID ");
+            }
+
+            System.Data.Common.DbCommand dbCmd = db.GetSqlStringCommand(sqlCmdBuilder.ToString());
+            dbCmd.CommandType = CommandType.Text;
+
+            db.AddInParameter(dbCmd, ":MOBILENUMBER", DbType.String, mobileNumber.Trim());
+            if (userID != 0)
+            {
+                db.AddInParameter(dbCmd, ":USERID", DbType.Int32, userID);
+            }
+            bool isExists = false;
+            using (dataReaderCheck = db.ExecuteReader(dbCmd))
+            {
+                if (dataReaderCheck.Read())
+                    isExists = true;
+
+                dataReaderCheck.Close();
+            }
+            return isExists;
+
+
+        }
+
+
+        public static bool InsertUserInfo(Database db, System.Data.Common.DbTransaction transaction, string password, string firstName, string lastName, string emailID, string mobilenumber,string role)
+        {
+            string hashedPassword = HashPassword(password);
+            StringBuilder sqlCmdBuilder = new StringBuilder();
+            sqlCmdBuilder.Append(" INSERT INTO LDB1_LOGININFOTABLE_SUJAN ");
+            sqlCmdBuilder.Append(" ( FFNAME, FLNAME, FMOB, FEMAILID, FPASSWORD, FROLEID) ");
+            sqlCmdBuilder.Append(" VALUES (");
+            sqlCmdBuilder.Append(" :FIRSTNAME, :LASTNAME, :MOBILE, :EMAILID, :PASSWORD, ");
+            sqlCmdBuilder.Append(" ( SELECT FROLEID FROM LDB1_ROLEINFOTABLE_SUJAN WHERE FROLENAME = :ROLENAME))");
+
+
+
+            System.Data.Common.DbCommand dbCmd = db.GetSqlStringCommand(sqlCmdBuilder.ToString());
+
+            db.AddInParameter(dbCmd, ":FIRSTNAME", DbType.String, firstName);
+            db.AddInParameter(dbCmd, ":LASTNAME", DbType.String, lastName);
+            db.AddInParameter(dbCmd, ":MOBILE", DbType.String, mobilenumber);
+            db.AddInParameter(dbCmd, ":EMAILID", DbType.String, emailID);
+            db.AddInParameter(dbCmd, ":PASSWORD", DbType.String, hashedPassword);
+
+
+            db.AddInParameter(dbCmd, ":ROLENAME", DbType.String, role);
+
+            if (db.ExecuteNonQuery(dbCmd)>0)
+            {
+                return true;
+            }
+            return false;
+
+
+        }
     }
 }
